@@ -1,6 +1,6 @@
 public class SuperArray{
     private Object[] array;
-    private int length;
+    private int length = 0;
 
     public SuperArray(){
 	array = new Object[10];
@@ -31,35 +31,48 @@ public class SuperArray{
 	    array = newArray;
 	}
 	else{
-	    System.out.println("Error");
+	    throw new IndexOutOfBoundsException();
+	}
+    }
+
+    public void toResize(){
+	if(length == array.length){
+	    resize(array.length*2);
+	}
+	if(length <= 1/4*array.length){
+	    resize(array.length/2);
 	}
     }
 
     public void add(Object e){
-	resize(array.length+1);
-	array[array.length-1] = e;
- 
+	toResize();
+	array[length] = e;
+	length++;
     }
 
     public void add(int index, Object e){
-	if(index>=0 && index<array.length){
-	    Object copy[] = new Object[array.length];
-	    for(int i = 0; i<array.length; i++){
+	toResize();
+	if(index>=0 && index<length){
+	    Object copy[] = new Object[length];
+	    for(int i = 0; i<length; i++){
 		copy[i] = array[i];
 	    }
-	    resize(array.length+1);
-	    array[index]=e;
+	    array[index] = e;
+	    length++;
 	    for(int i = index; i<copy.length; i++){
 		array[i+1]=copy[i];
 	    }
 	}
+	else if(index >= length){
+	    array[length] = e;
+	    length++;
+	}
 	else{
-	    System.out.println("Error");
+	    throw new IndexOutOfBoundsException();
 	}
     }
 
     public int size(){
-	length = array.length;
 	return length;
     }
 
@@ -68,48 +81,52 @@ public class SuperArray{
 	for(int i = 0; i<array.length; i++){
 	    array[i]=null;
 	}
+	length = 0;
     }
 
     public Object get(int index){
-	if(index>=0 && index<array.length){
+	if(index>=0 && index<length){
 	    return array[index];
 	}
 	else{
-	    System.out.println("Error");
+	    throw new IndexOutOfBoundsException();
 	}
-	return null;
     }
 
     public Object set(int index, Object e){
 	Object replace = null;
-	if(index>=0 && index<array.length){
+	if(index>=0 && index<length){
 	    replace = array[index];
 	    array[index] = e;
 	}
 	else{
-	    System.out.println("Error");
+	    throw new IndexOutOfBoundsException();
 	}
 	return replace;
     }
 
     public Object remove(int index){
 	Object obj = null;
-	if(index>=0 && index<array.length){
-	    Object copy[] = new Object[array.length];
-	    for(int i = 0; i<array.length; i++){
+	if(index>=0 && index<length){
+	    Object copy[] = new Object[length];
+	    for(int i = 0; i<length; i++){
 		copy[i] = array[i];
 	    }
 	    obj = array[index];
-	    for(int i = index; i<array.length-1; i++){
+	    for(int i = index; i<length-1; i++){
 		array[i]=copy[i+1];
 	    }
-	    resize(array.length-1);
+	    length--;
+	    if(length == array.length){
+		resize(array.length*2);
+
+	    }
+	
 	}
 	else{
-	    System.out.println("Error");
+	    throw new IndexOutOfBoundsException();
 	}
 	return obj;
     }
-
+    
 }
-  
