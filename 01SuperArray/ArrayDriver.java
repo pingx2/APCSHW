@@ -10,6 +10,8 @@ public class ArrayDriver{
 
 	System.out.println("\n");
 
+	SuperArray M = new SuperArray(6);
+
 	try{
 	    M.add("A");
 	    M.add("B");
