@@ -1,7 +1,6 @@
 public class WordGrid{
 
     private char[][]data;
-    private int rows, cols;
 
     /**Initialize the grid to the size specified and fill all of the positions
      *with spaces.
@@ -9,32 +8,32 @@ public class WordGrid{
      *@param col is the starting width of the WordGrid
      */
     public WordGrid(int rows,int cols){
-	this.rows = rows;
-	this.cols = cols;
-	char[][]data = new char[rows][cols];
+	data = new char[rows][cols];
 	clear();
     }
     /**Set all values in the WordGrid to spaces ' '*/
     private void clear(){
-	for(int h = 0; h<rows; h++){
-	    for(int w = 0; w<cols; w++){
+	for(int h = 0; h<data.length; h++){
+	    for(int w = 0; w<data[h].length; w++){
 		data[h][w]=' ';
 	    }
 	}
     }
+
+
     /**The proper formatting for a WordGrid is created in the toString.
      *@return a String with each character separated by spaces, and each row
      *separated by newlines.
      */
     public String toString(){
 	String result = "";
-	for(int h = 0; h<rows; h++){
-	    result += "[";
-	    for(int w = 0; w<cols; w++){
+	for(int h = 0; h<data.length; h++){
+	    result += "{";
+	    for(int w = 0; w<data[h].length; w++){
 		result += data[h][w];
-		result += ", ";
+		result += " ";
 	    }
-	    result += "]";
+	    result += "}";
 	    result += "\n";
 	}
 	return result;
@@ -50,10 +49,16 @@ public class WordGrid{
      *or there are overlapping letters that do not match, then false is returned.
 */
     public boolean addWordHorizontal(String word,int row, int col){
-	if(row <= this.rows && col <= this.cols){
-	    if(this.cols-col>=word.length()){
+	if(row < data.length && col < data[row].length){
+	    if(data[row].length-col >= word.length()){
+		for(int i = 0; i<word.length(); i++){
+		    if(data[row][col+i]!=' ' && data[row][col+i]!=word.charAt(i)){
+			return false;
+		    }
+		}
 		for(int i = 0; i<word.length(); i++){
 		    data[row][col+i]=word.charAt(i);
+
 		}
 		return true;
 	    }
@@ -62,13 +67,33 @@ public class WordGrid{
     }
     //vertical + diagonal should be implemented as well.
     
+    public boolean addWordVertical(String word, int row, int col){
+	if(row < data.length && col < data[row].length){
+	    if(data.length - row >= word.length()){
+		for(int i = 0; i<word.length(); i++){
+		    if(data[row+i][col]!=' ' && data[row+i][col]!=word.charAt(i)){
+			return false;
+		    }
+		}
+		for(int i = 0; i<word.length(); i++){
+		    data[row+i][col]=word.charAt(i);
+		}
+		return true;	
+	    }
+	}
+	return false;
+    }
+	
+
     public static void main(String[]args){
 
-	WordGrid[][]data = new WordGrid[8][8];
-	
+    	WordGrid data = new WordGrid(8,8);
+      	
+	data.addWordHorizontal("cat", 4, 2);
+	data.addWordVertical("dog", 1, 1);
 	System.out.println(data.toString());
+	
 
-	//data.addWordHorizontal("word", 3, 5);
     }	
   
 }
