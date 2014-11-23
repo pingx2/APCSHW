@@ -51,12 +51,12 @@ public class WordGrid{
     public boolean addWordHorizontal(String word,int row, int col){
 	if(row < data.length && col < data[row].length){
 	    if(data[row].length-col >= word.length()){
-		for(int i = 0; i<word.length(); i++){
+		for(int i = 0; i < word.length(); i++){
 		    if(data[row][col+i]!=' ' && data[row][col+i]!=word.charAt(i)){
 			return false;
 		    }
 		}
-		for(int i = 0; i<word.length(); i++){
+		for(int i = 0; i < word.length(); i++){
 		    data[row][col+i]=word.charAt(i);
 
 		}
@@ -70,12 +70,12 @@ public class WordGrid{
     public boolean addWordVertical(String word, int row, int col){
 	if(row < data.length && col < data[row].length){
 	    if(data.length - row >= word.length()){
-		for(int i = 0; i<word.length(); i++){
+		for(int i = 0; i < word.length(); i++){
 		    if(data[row+i][col]!=' ' && data[row+i][col]!=word.charAt(i)){
 			return false;
 		    }
 		}
-		for(int i = 0; i<word.length(); i++){
+		for(int i = 0; i < word.length(); i++){
 		    data[row+i][col]=word.charAt(i);
 		}
 		return true;	
@@ -84,16 +84,22 @@ public class WordGrid{
 	return false;
     }
 	
-
-    public static void main(String[]args){
-
-    	WordGrid data = new WordGrid(8,8);
-      	
-	data.addWordHorizontal("cat", 4, 2);
-	data.addWordVertical("dog", 1, 1);
-	System.out.println(data.toString());
-	
-
-    }	
+    public boolean addWordDiagonal(String word, int row, int col){
+	if(row < data.length && col < data[row].length){
+	    if(data[row].length - col >= word.length() && data.length - row >= word.length()){
+		for(int i = 0; i < word.length(); i++){
+		    if(data[row+i][col+i]!=' ' && data[row+i][col+i]!=word.charAt(i)){
+			return false;
+		    }
+		}
+		for(int i = 0; i < word.length(); i++){
+		    data[row+i][col+i]=word.charAt(i);
+		}
+		return true;
+	    }
+	}
+	    return false;
+    }
+   
   
 }
