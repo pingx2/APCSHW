@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 public class WordGrid{
 
     private char[][]data;
+    private int rows, cols;
     ArrayList<String> Added;
     Random rand = new Random();
 
@@ -16,9 +17,19 @@ public class WordGrid{
      */
     public WordGrid(int rows,int cols){
 	data = new char[rows][cols];
+	this.rows = rows;
+	this.cols = cols;
 	Added = new ArrayList<String>();
 	clear();
     }
+
+    public WordGrid(){
+	this(20,20);
+    }
+    public void setSeed(long seed){
+	this.rand.setSeed(seed);
+    }
+
     /**Set all values in the WordGrid to spaces ' '*/
     private void clear(){
 	for(int h = 0; h < data.length; h++){
@@ -100,7 +111,7 @@ public class WordGrid{
     
     public void Fill(){
 	for(int r = 0; r < data.length; r++){
-	    for(int c = 0; c < data.length; c++){
+	    for(int c = 0; c < data[r].length; c++){
 		if(data[r][c] == '_'){
 		    data[r][c] = (char)('a'+(int)(Math.random()*26));
 		}
@@ -112,34 +123,43 @@ public class WordGrid{
 	throws FileNotFoundException{
 	File text;
 	Scanner in;
+	ArrayList<String> Words = new ArrayList<String>();
 	try{
 	    text = new File(fileName);
 	    in = new Scanner(text);
+	    while(in.hasNext()){
+		Words.add(in.next());
+	    }
 	}catch(Exception e){
 	    System.out.println("File not found");
 	}
-	ArrayList<String> Words = new ArrayList<String>();
-	while(in.hasNext()){
-	    Words.add(in.next());
-	}	
+	for(int i = 0; i < Words.size(); i++){
+	    boolean added = false;
+	    for(int tries = 0; tries < 100; tries++){
+		added = this.AddWordRandomly(Words.get(i), rand.nextInt(rows), rand.nextInt(cols));
+		if(added){
+		    break;
+		}
+	    }
+	}
 	if(fillRandomLetters){
-	    data.Fill();
+	    this.Fill();
 	}
     }
     
-    public String WordinPuzzle(){	
+    public String WordsinPuzzle(){	
 	String WordBox = "";
 	for(int i = 0; i < Added.size(); i++){
 	    WordBox += Added.get(i);
-	    WordBox += "\t";
-	    if(i!=0 && i%4 == 0){
+	    WordBox += "    \t";
+	    if(i != 0 && (i+1)%4 == 0){
 		WordBox += "\n";
 	    }
 	}
 	return WordBox;
     }
-
-
+    
+    
     public boolean addWordHorizontal(String word,int row, int col){
 	if(row < data.length && col < data[row].length){
 	    if(data[row].length-col >= word.length()){
