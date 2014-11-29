@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class WordGrid{
 
     private char[][]data;
@@ -13,9 +15,9 @@ public class WordGrid{
     }
     /**Set all values in the WordGrid to spaces ' '*/
     private void clear(){
-	for(int h = 0; h<data.length; h++){
-	    for(int w = 0; w<data[h].length; w++){
-		data[h][w]=' ';
+	for(int h = 0; h < data.length; h++){
+	    for(int w = 0; w < data[h].length; w++){
+		data[h][w]='_';
 	    }
 	}
     }
@@ -27,9 +29,9 @@ public class WordGrid{
      */
     public String toString(){
 	String result = "";
-	for(int h = 0; h<data.length; h++){
+	for(int h = 0; h < data.length; h++){
 	    result += "{";
-	    for(int w = 0; w<data[h].length; w++){
+	    for(int w = 0; w < data[h].length; w++){
 		result += data[h][w];
 		result += " ";
 	    }
@@ -48,11 +50,65 @@ public class WordGrid{
      *@return true when the word is added successfully. When the word doesn't fit,
      *or there are overlapping letters that do not match, then false is returned.
 */
+		
+    public boolean CheckWord(String word, int row, int col, int dx, int dy){
+	if(dx==0 && dy==0){
+	    return false;
+	}
+	else if(dx*word.length()+col >= data[0].length || dy*word.length()+row >= data.length){
+	    return false;
+	}
+	else if(dx*word.length()+col < 0 || dy*word.length()+row < 0){
+	    return false;
+	}
+	for(int i = 0; i < word.length(); i++){
+	    if(data[dy*i+row][dx*i+col]!='_' && data[dy*i+row][dx*i+col]!=word.charAt(i)){
+		return false;
+		
+	    }
+	    
+	}
+	return true;
+    }
+    
+
+    public boolean AddWord(String word, int row, int col, int dx, int dy){
+	if(CheckWord(word, row, col, dx, dy)){
+	    for(int i = 0; i < word.length(); i++){
+		data[dy*i+row][dx*i+col] = word.charAt(i);
+	    }
+	    return true;
+	}
+	else{
+	    return false;
+	}
+    }
+    
+    public boolean AddWordRandomly(String word, int row, int col){
+	Random rand = new Random();
+	//dx & dy = -1, 0 ,1
+	int dx = rand.nextInt(3) - 1;
+	int dy = rand.nextInt(3) - 1;
+	return (AddWord(word, row, col, dx, dy));
+    }
+    
+    public void Fill(){
+	for(int r = 0; r < data.length; r++){
+	    for(int c = 0; c < data.length; c++){
+		if(data[r][c] == '_'){
+		    data[r][c] = (char)('a'+(int)(Math.random()*26));
+		}
+	    }
+	}
+    }
+    
+
+
     public boolean addWordHorizontal(String word,int row, int col){
 	if(row < data.length && col < data[row].length){
 	    if(data[row].length-col >= word.length()){
 		for(int i = 0; i < word.length(); i++){
-		    if(data[row][col+i]!=' ' && data[row][col+i]!=word.charAt(i)){
+		    if(data[row][col+i]!='_' && data[row][col+i]!=word.charAt(i)){
 			return false;
 		    }
 		}
@@ -65,13 +121,12 @@ public class WordGrid{
 	}
 	return false;
     }
-    //vertical + diagonal should be implemented as well.
     
     public boolean addWordVertical(String word, int row, int col){
 	if(row < data.length && col < data[row].length){
 	    if(data.length - row >= word.length()){
 		for(int i = 0; i < word.length(); i++){
-		    if(data[row+i][col]!=' ' && data[row+i][col]!=word.charAt(i)){
+		    if(data[row+i][col]!='_' && data[row+i][col]!=word.charAt(i)){
 			return false;
 		    }
 		}
@@ -88,7 +143,7 @@ public class WordGrid{
 	if(row < data.length && col < data[row].length){
 	    if(data[row].length - col >= word.length() && data.length - row >= word.length()){
 		for(int i = 0; i < word.length(); i++){
-		    if(data[row+i][col+i]!=' ' && data[row+i][col+i]!=word.charAt(i)){
+		    if(data[row+i][col+i]!='_' && data[row+i][col+i]!=word.charAt(i)){
 			return false;
 		    }
 		}
@@ -100,6 +155,5 @@ public class WordGrid{
 	}
 	    return false;
     }
-   
-  
+    
 }
