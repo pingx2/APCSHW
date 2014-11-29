@@ -1,8 +1,13 @@
 import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class WordGrid{
 
     private char[][]data;
+    ArrayList<String> Added;
+    Random rand = new Random();
+
 
     /**Initialize the grid to the size specified and fill all of the positions
      *with spaces.
@@ -11,6 +16,7 @@ public class WordGrid{
      */
     public WordGrid(int rows,int cols){
 	data = new char[rows][cols];
+	Added = new ArrayList<String>();
 	clear();
     }
     /**Set all values in the WordGrid to spaces ' '*/
@@ -77,6 +83,7 @@ public class WordGrid{
 	    for(int i = 0; i < word.length(); i++){
 		data[dy*i+row][dx*i+col] = word.charAt(i);
 	    }
+	    Added.add(word);
 	    return true;
 	}
 	else{
@@ -85,7 +92,6 @@ public class WordGrid{
     }
     
     public boolean AddWordRandomly(String word, int row, int col){
-	Random rand = new Random();
 	//dx & dy = -1, 0 ,1
 	int dx = rand.nextInt(3) - 1;
 	int dy = rand.nextInt(3) - 1;
@@ -102,6 +108,36 @@ public class WordGrid{
 	}
     }
     
+    public void LoadWordsFromFile(String fileName, boolean fillRandomLetters) 
+	throws FileNotFoundException{
+	File text;
+	Scanner in;
+	try{
+	    text = new File(fileName);
+	    in = new Scanner(text);
+	}catch(Exception e){
+	    System.out.println("File not found");
+	}
+	ArrayList<String> Words = new ArrayList<String>();
+	while(in.hasNext()){
+	    Words.add(in.next());
+	}	
+	if(fillRandomLetters){
+	    data.Fill();
+	}
+    }
+    
+    public String WordinPuzzle(){	
+	String WordBox = "";
+	for(int i = 0; i < Added.size(); i++){
+	    WordBox += Added.get(i);
+	    WordBox += "\t";
+	    if(i!=0 && i%4 == 0){
+		WordBox += "\n";
+	    }
+	}
+	return WordBox;
+    }
 
 
     public boolean addWordHorizontal(String word,int row, int col){
