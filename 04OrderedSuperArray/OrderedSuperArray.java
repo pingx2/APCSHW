@@ -1,18 +1,37 @@
 public class OrderedSuperArray extends SuperArray{
 
-    public void add(String s){
-	toResize();
-	for(int i = 0; i < length+1; i++){
-	    if(array[i].compareTo(s) <= 0){
-		add(i+1, s);
+    public OrderedSuperArray(){
+	array = new String[10];
+    }
+    
+    public OrderedSuperArray(int c){
+	array = new String[c];
+    }
+
+   public void add(String s){
+	int i;
+	for(i = size(); i > 0; i--){
+	    if(get(i-1).compareTo(s) <= 0){
 		break;
 	    }
 	}
-	length++;
+	super.add(i, s);
     }
-
-    public String set(int index, String s){
+    
+    
+    public void add(int i, String s){
+	add(s);
+    }
 	
-
+    public static void main(String[]args){
+	
+	OrderedSuperArray array = new OrderedSuperArray();
+	array.add("b");
+	array.add("dog");
+	array.add("a");
+	array.add("c");
+	array.add("A");
+	System.out.println(array.toString());
+    }
 
 }     

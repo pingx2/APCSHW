@@ -1,5 +1,5 @@
 public class SuperArray{
-    private String[] array;
+    String[] array;
     private int length = 0;
     
     public SuperArray(){
@@ -13,7 +13,7 @@ public class SuperArray{
     public String toString(){
 	String s = "";
 	s += "[";
-	for(int i = 0; i<array.length; i++){
+	for(int i = 0; i<size(); i++){
 	    s += array[i];
 	    s += ", ";
 	}
@@ -83,7 +83,7 @@ public class SuperArray{
 	length = 0;
     }
     public String get(int index){
-	if(index >= 0 && index < length){
+	if(index >= 0 && index < size()){
 	    return array[index];
 	}
 	else{
@@ -118,11 +118,40 @@ public class SuperArray{
 	    if(length == array.length){
 		resize(array.length*2);
 	    }
-}
+	}
 	else{
 	    throw new IndexOutOfBoundsException();
 	}
 	return obj;
+    }
+
+   public void insertionSort(){
+	String s = "";
+	for(int i = 1; i < size(); i++){
+	    if(get(i).compareTo(get(i-1)) < 0){
+		s = get(i);
+		int r = i;
+	        while(s.compareTo(get(r-1)) < 0){
+		    set(r,get(r-1));
+		    r--;
+		}
+		set(r,s);	
+	    } 
+	}
+	
+   }
+    
+    public static void main(String[]args){
+	
+	SuperArray array = new SuperArray();
+	array.add("a");
+	array.add("dog");
+	array.add("c");
+	array.add("cat");
+	System.out.println(array);
+	array.insertionSort();
+	System.out.println(array);
+
     }
 }
  
