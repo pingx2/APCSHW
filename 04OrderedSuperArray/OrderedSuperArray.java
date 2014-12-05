@@ -22,7 +22,33 @@ public class OrderedSuperArray extends SuperArray{
     public void add(int i, String s){
 	add(s);
     }
-	
+
+    public String set(int i, String s){
+	super.remove(i);
+	add(s);
+	//return 
+    }
+
+    public int find(String s){
+	int x = 0;
+	int y = size();
+	int m = (x+y)/2;
+	int index = -1
+	while(x <= y){
+	    if(array[m].comparesTo(s) >= 0){
+		if(array[m].comparesTo(s) = 0){
+		    index = m;
+		}
+	        y = m;	
+	    }
+	    else{
+		x = m;
+	    }
+	    m = (x+y)/2;
+	}
+	return index;		
+    }
+    
     public static void main(String[]args){
 	
 	OrderedSuperArray array = new OrderedSuperArray();

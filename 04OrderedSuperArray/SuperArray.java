@@ -1,3 +1,5 @@
+
+
 public class SuperArray{
     String[] array;
     private int length = 0;
@@ -125,31 +127,59 @@ public class SuperArray{
 	return obj;
     }
 
-   public void insertionSort(){
+    public void insertionSort(){
 	String s = "";
 	for(int i = 1; i < size(); i++){
 	    if(get(i).compareTo(get(i-1)) < 0){
 		s = get(i);
 		int r = i;
-	        while(s.compareTo(get(r-1)) < 0){
+		while(r > 0 && s.compareTo(get(r-1)) < 0){
 		    set(r,get(r-1));
 		    r--;
 		}
 		set(r,s);	
 	    } 
 	}
-	
-   }
+    }
+    
+    public int find(String s){
+	for(int i = 0; i < size(); i++){
+	    if(array[i].equals(s)){
+		return i;
+	    }
+	   
+	}
+	return -1;
+    }
+    
+
+    /* public boolean testSort(){
+	String[] copy = new String[size()];
+	for(int i = 0; i > size(); i++){
+	    copy(i,array[i]);
+	}
+	copy.sort();
+	array.insertionSort();
+	for(int i = 0; i > size(); i++){
+	    if(!array[i].equals(copy[i])){
+		return false;
+	    }
+	}
+	return true;
+    }
+    */
+
     
     public static void main(String[]args){
 	
 	SuperArray array = new SuperArray();
-	array.add("a");
+	array.add("hello");
 	array.add("dog");
 	array.add("c");
 	array.add("cat");
 	System.out.println(array);
 	array.insertionSort();
+
 	System.out.println(array);
 
     }
