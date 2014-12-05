@@ -33,7 +33,7 @@ public class OrderedSuperArray extends SuperArray{
 	int x = 0;
 	int y = size();
 	int m = (x+y)/2;
-	int index = -1
+	int index = -1;
 	while(x <= y){
 	    if(array[m].comparesTo(s) >= 0){
 		if(array[m].comparesTo(s) = 0){
