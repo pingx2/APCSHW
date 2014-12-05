@@ -24,9 +24,10 @@ public class OrderedSuperArray extends SuperArray{
     }
 
     public String set(int i, String s){
+	String result = array[i];
 	super.remove(i);
 	add(s);
-	//return 
+	return result;
     }
 
     public int find(String s){
@@ -35,8 +36,8 @@ public class OrderedSuperArray extends SuperArray{
 	int m = (x+y)/2;
 	int index = -1;
 	while(x <= y){
-	    if(array[m].comparesTo(s) >= 0){
-		if(array[m].comparesTo(s) = 0){
+	    if(array[m].compareTo(s) >= 0){
+		if((array[m]).compareTo(s) == 0){
 		    index = m;
 		}
 	        y = m;	
