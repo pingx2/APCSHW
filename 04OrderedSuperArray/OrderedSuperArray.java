@@ -50,15 +50,5 @@ public class OrderedSuperArray extends SuperArray{
 	return index;		
     }
     
-    public static void main(String[]args){
-	
-	OrderedSuperArray array = new OrderedSuperArray();
-	array.add("b");
-	array.add("dog");
-	array.add("a");
-	array.add("c");
-	array.add("A");
-	System.out.println(array.toString());
-    }
 
 }     

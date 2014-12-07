@@ -1,5 +1,3 @@
-
-
 public class SuperArray{
     String[] array;
     private int length = 0;
@@ -151,8 +149,24 @@ public class SuperArray{
 	}
 	return -1;
     }
-    
 
+    public void selectionSort(){
+	for(int i = 0; i < size(); i++){
+	    String smallest = array[i];	
+	    int pos = i;
+	    for(int j = i+1; j < size(); j++){
+		if(smallest.compareTo(array[j]) > 0){
+		    smallest = array[j];
+		    pos = j;
+		}
+	    }
+	    set(pos,array[i]);
+	    set(i,smallest);
+	}
+    }
+    
+    
+    
     /* public boolean testSort(){
 	String[] copy = new String[size()];
 	for(int i = 0; i > size(); i++){
@@ -170,18 +184,6 @@ public class SuperArray{
     */
 
     
-    public static void main(String[]args){
-	
-	SuperArray array = new SuperArray();
-	array.add("hello");
-	array.add("dog");
-	array.add("c");
-	array.add("cat");
-	System.out.println(array);
-	array.insertionSort();
-
-	System.out.println(array);
-
-    }
+   
 }
  
