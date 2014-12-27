@@ -1,5 +1,13 @@
 public class Sorts{
     
+    public static String name() {
+	return "Zeng, Ping Ping";
+    }
+    
+    public static int period() {
+	return 6;
+    }
+    
     public static void BubbleSort(int[]c){
 	int t;
 	boolean swap = true;
@@ -48,6 +56,5 @@ public class Sorts{
 	}
     }
 
-    //public static void main(String[]args){
     
 }
