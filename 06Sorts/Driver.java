@@ -3,6 +3,7 @@ import java.io.*;
 
 public class Driver{
     
+    
     public static void main(String[] args){
 	
 	Random rand = new Random();
@@ -44,7 +45,9 @@ public class Driver{
 	//System.out.println(Arrays.toString(c));
 	time = endTime - startTime;
 	System.out.println(time + "");
+
 	
     }    
     
+
 }

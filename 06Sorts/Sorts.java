@@ -56,5 +56,32 @@ public class Sorts{
 	}
     }
 
+    public static int numDigits(int a){
+	int n = 1;
+	while(a / 10 > 0){
+	    n++;
+	    a = a / 10;
+	}
+	return n;
+    }
+
+    public static void RadixSort(int[]c){
+	int max = c[0]; 
+	int n = 1; 
+	int length = c.length;
+        for(int i = 1; i < length; i++){
+            if (c[i] > max){
+                max = c[i];
+	    }
+	}
+	int d = numDigits(max);
+        int[][] bucket = new int[10][d];
+        while(max / n > 0){
+	    for(int i = 0; i < 10; i++){
+		bucket[n-1][(c[i] / n) % 10]=c[i];
+	    }
+	    
+        {
+
     
 }
